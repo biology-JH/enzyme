@@ -1,0 +1,203 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#f4f7f7">
+  <meta name="description" content="An interactive IB Biology C1.1 enzyme kinetics virtual lab for collecting repeat-trial data.">
+  <title>Enzyme Kinetics Lab · IB Biology C1.1</title>
+  <link rel="icon" type="image/svg+xml" href="/public/enzyme-mark.svg">
+  <!-- Version keys are the first 12 characters of each asset's SHA-256; update them when the files change. -->
+  <link rel="stylesheet" href="/styles.css?v=647f9817c18d">
+  <script src="/app.js?v=4a877babb874" defer></script>
+</head>
+<body>
+  <div class="page-shell">
+    <header class="topbar">
+      <a class="brand" href="/" aria-label="Enzyme Kinetics Lab home">
+        <span class="brand-mark" aria-hidden="true">
+          <svg viewBox="0 0 40 40" role="img">
+            <path d="M20 3.5 34.3 11.8v16.4L20 36.5 5.7 28.2V11.8L20 3.5Z" fill="none" stroke="currentColor" stroke-width="2.1"/>
+            <path d="M12.2 23.9c0-4.4 3.5-7.8 7.8-7.8 1.7 0 3.1.5 4.2 1.3l-2.5 2.1h5.6v-5.2l-1.4 1.2a9.6 9.6 0 1 0 3.5 9.3h-3.1a6.5 6.5 0 0 1-12.9-.9Z" fill="currentColor"/>
+          </svg>
+        </span>
+        <span class="brand-name">Fieldnotes<span> / BIOLOGY</span></span>
+      </a>
+      <div class="course-tag"><span class="course-dot"></span> IB BIOLOGY <span class="tag-divider">/</span> C1.1</div>
+    </header>
+
+    <main>
+      <section class="intro" aria-labelledby="page-title">
+        <div class="intro-copy">
+          <p class="eyebrow">VIRTUAL INVESTIGATION <span>·</span> ENZYME KINETICS</p>
+          <h1 id="page-title">Measure the pace<br class="desktop-break"> of a reaction.</h1>
+          <p class="intro-text">Change one condition at a time. Run repeat trials. Let the data tell the story.</p>
+          <div class="intro-note">
+            <span class="note-index">01</span>
+            <span>Collect five repeats for reliable comparisons.</span>
+          </div>
+        </div>
+        <figure class="hero-picture">
+          <img src="/public/assets/enzyme-header.jpg" data-storage="/manus-storage/enzyme-header_6bb1a86b.jpg" alt="Blue enzyme protein approaching green substrate molecules, from the uploaded reference visual">
+          <figcaption>Enzyme + substrate · molecular model</figcaption>
+        </figure>
+      </section>
+
+      <section class="conditions-section" aria-labelledby="conditions-heading">
+        <div class="section-heading">
+          <div>
+            <p class="section-kicker">EXPERIMENT SETUP</p>
+            <h2 id="conditions-heading">Set your conditions</h2>
+          </div>
+          <span class="live-badge"><span class="live-dot"></span> CONTROLS LIVE</span>
+        </div>
+
+        <fieldset class="controls-grid" id="controlsFieldset">
+          <legend class="visually-hidden">Reaction conditions</legend>
+          <div class="control-card">
+            <div class="control-label-row"><label for="tempRange">Temperature</label><output id="tempValue" for="tempRange">37°C</output></div>
+            <input id="tempRange" type="range" min="10" max="70" step="1" value="37" aria-describedby="tempHint">
+            <div class="range-limits"><span>10°C</span><span>70°C</span></div>
+            <p class="control-hint" id="tempHint">Optimum <strong>37°C</strong></p>
+          </div>
+          <div class="control-card">
+            <div class="control-label-row"><label for="phRange">pH</label><output id="phValue" for="phRange">7.0</output></div>
+            <input id="phRange" type="range" min="2" max="12" step="0.1" value="7" aria-describedby="phHint">
+            <div class="range-limits"><span>2</span><span>12</span></div>
+            <p class="control-hint" id="phHint">Optimum <strong>pH 7</strong></p>
+          </div>
+          <div class="control-card">
+            <div class="control-label-row"><label for="substrateRange">Substrate</label><output id="substrateValue" for="substrateRange">80 mM</output></div>
+            <input id="substrateRange" type="range" min="10" max="200" step="5" value="80" aria-describedby="substrateHint">
+            <div class="range-limits"><span>10 mM</span><span>200 mM</span></div>
+            <p class="control-hint" id="substrateHint">Concentration</p>
+          </div>
+          <div class="control-card">
+            <div class="control-label-row"><label for="enzymeRange">Enzyme</label><output id="enzymeValue" for="enzymeRange">5 µM</output></div>
+            <input id="enzymeRange" type="range" min="1" max="10" step="0.5" value="5" aria-describedby="enzymeHint">
+            <div class="range-limits"><span>1 µM</span><span>10 µM</span></div>
+            <p class="control-hint" id="enzymeHint">Concentration</p>
+          </div>
+          <div class="control-card inhibitor-card">
+            <div class="control-label-row"><label for="inhibitorSelect">Inhibitor type</label><span class="select-cue" aria-hidden="true">⌄</span></div>
+            <div class="select-wrap">
+              <select id="inhibitorSelect" aria-label="Inhibitor type">
+                <option value="none">None</option>
+                <option value="competitive">Competitive</option>
+                <option value="noncompetitive">Non-Competitive</option>
+              </select>
+            </div>
+            <p class="control-hint">Change inhibitor condition</p>
+          </div>
+        </fieldset>
+      </section>
+
+      <section class="visual-section" aria-label="Reaction visualization and graph">
+        <article class="visual-card chamber-card" aria-labelledby="chamber-heading">
+          <div class="visual-card-heading">
+            <div>
+              <p class="section-kicker">REACTION VIEW</p>
+              <h2 id="chamber-heading">Collision chamber</h2>
+            </div>
+            <span class="visual-index">A</span>
+          </div>
+          <div class="canvas-wrap chamber-wrap">
+            <canvas id="chamberCanvas" aria-label="Interactive enzyme collision chamber. Tap or click the image to stir particles; during a trial, substrate molecules can become products.">Interactive reaction particle chamber.</canvas>
+            <span class="canvas-tap-hint">Tap or click to stir</span>
+          </div>
+          <div class="chamber-footer">
+            <div class="legend" aria-label="Particle key">
+              <span><i class="legend-dot substrate-dot"></i>Substrate</span>
+              <span><i class="legend-dot enzyme-dot"></i>Enzyme</span>
+              <span><i class="legend-dot product-dot"></i>Product</span>
+              <span><i class="legend-dot inhibitor-dot"></i>Inhibitor</span>
+            </div>
+            <span class="collision-note" id="collisionNote">Particles in motion</span>
+          </div>
+        </article>
+
+        <article class="visual-card graph-card" aria-labelledby="graph-heading">
+          <div class="visual-card-heading graph-heading-row">
+            <div>
+              <p class="section-kicker">LIVE DATA <span class="trace-indicator" id="traceIndicator"></span></p>
+              <h2 id="graph-heading">Product formed <span class="heading-unit">vs. time</span></h2>
+            </div>
+            <span class="graph-key"><i></i>Latest trial</span>
+          </div>
+          <div class="graph-canvas-wrap">
+            <canvas id="graphCanvas" aria-label="Live line graph with time in seconds on the horizontal axis and product formed in micromolar on the vertical axis. Selected recorded trials appear as comparison curves.">Product formed versus time graph.</canvas>
+          </div>
+          <p class="compare-status" id="compareStatus" aria-live="polite">Select a trial number below to overlay its curve here.</p>
+          <div class="graph-axis-footer"><span>Time <strong>(s)</strong></span><span>Product formed <strong>(µM)</strong></span></div>
+        </article>
+      </section>
+
+      <section class="run-section" aria-labelledby="run-heading">
+        <div class="run-instructions">
+          <p class="section-kicker">DATA COLLECTION</p>
+          <h2 id="run-heading">Ready to measure?</h2>
+          <p id="runHint">A trial runs for exactly 15.0 seconds. Keep the same settings for five repeats.</p>
+        </div>
+        <div class="run-action">
+          <div class="repeat-status" id="repeatStatus" aria-live="polite">Repeat 1 of 5 <span>· same conditions</span></div>
+          <button id="runButton" class="primary-button" type="button">
+            <span class="play-icon" aria-hidden="true">▶</span>
+            <span>Run 15-Second Trial</span>
+            <span class="button-arrow" aria-hidden="true">↗</span>
+          </button>
+        </div>
+        <div class="run-progress" id="runProgress" hidden aria-live="polite">
+          <div class="progress-copy"><span id="runStateText">Trial running</span><strong id="timeReadout">0.0 / 15.0 s</strong></div>
+          <div class="progress-track" role="progressbar" aria-label="Trial progress" aria-valuemin="0" aria-valuemax="15" aria-valuenow="0" id="progressTrack"><span id="progressFill"></span></div>
+        </div>
+        <div class="results-row" aria-live="polite" aria-atomic="true">
+          <div class="result-card">
+            <span class="result-label">PRODUCT AT 15.0 s</span>
+            <div class="result-value"><span id="productResult">—</span><span class="result-unit">µM</span></div>
+          </div>
+          <div class="result-card rate-result">
+            <span class="result-label">INITIAL RATE</span>
+            <div class="result-value"><span id="rateResult">—</span><span class="result-unit">µM/s</span></div>
+          </div>
+          <p class="result-method">Initial rate is calculated from the first 3.0 seconds of the trace.</p>
+        </div>
+      </section>
+
+      <section class="trials-section" aria-labelledby="trials-heading">
+        <div class="table-header">
+          <div>
+            <p class="section-kicker">YOUR DATASET</p>
+            <div class="table-title-row"><h2 id="trials-heading">Recorded trials</h2><span class="trial-count" id="trialCount">0</span></div>
+            <p class="table-subtitle">Tap a trial number to compare its curve. Select up to five.</p>
+          </div>
+          <div class="table-actions">
+            <button id="downloadButton" class="secondary-button" type="button" disabled>
+              <svg viewBox="0 0 20 20" aria-hidden="true"><path d="M10 2.5v9m0 0 3.2-3.2M10 11.5 6.8 8.3M3 13.5v3h14v-3"/></svg>
+              Download Data as CSV
+            </button>
+            <button id="clearButton" class="text-button" type="button" disabled>Clear Table</button>
+          </div>
+        </div>
+        <div class="table-scroll" role="region" aria-label="Recorded trial data table" tabindex="0">
+          <table>
+            <thead>
+              <tr><th scope="col">Trial #</th><th scope="col">Temp</th><th scope="col">pH</th><th scope="col">[Substrate]</th><th scope="col">[Enzyme]</th><th scope="col">Inhibitor</th><th scope="col">Product at 15s</th><th scope="col">Initial Rate</th></tr>
+              <tr class="units-row" aria-hidden="true"><th></th><th>°C</th><th>—</th><th>mM</th><th>µM</th><th>—</th><th>µM</th><th>µM/s</th></tr>
+            </thead>
+            <tbody id="trialRows">
+              <tr class="empty-row"><td colspan="8"><span class="empty-mark">↗</span><span>Your first trial will appear here.</span></td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p class="data-note"><span class="note-mark">i</span> Each trial includes a small random variation (±3%). Data stays in this browser until you clear it.</p>
+      </section>
+
+      <footer class="page-footer">
+        <span>FIELDNOTES <span class="footer-separator">/</span> IB BIOLOGY C1.1</span>
+        <span>SIMULATED DATA <span class="footer-separator">·</span> FOR LEARNING</span>
+      </footer>
+    </main>
+  </div>
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+</body>
+</html>
